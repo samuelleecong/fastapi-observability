@@ -1,0 +1,58 @@
+name: fastapi-observability
+services:
+- name: fastapi-app-a
+  github:
+    repo: samuelleecong/fastapi-observability
+    branch: main
+    deploy_on_push: true
+  source_dir: fastapi_app
+  environment_slug: python
+  envs:
+  - key: APP_NAME
+    value: "app-a"
+  routes:
+  - path: /app-a
+
+- name: fastapi-app-b
+  github:
+    repo: samuelleecong/fastapi-observability
+    branch: main
+    deploy_on_push: true
+  source_dir: fastapi_app
+  environment_slug: python
+  envs:
+  - key: APP_NAME
+    value: "app-b"
+  routes:
+  - path: /app-b
+
+- name: fastapi-app-c
+  github:
+    repo: samuelleecong/fastapi-observability
+    branch: main
+    deploy_on_push: true
+  source_dir: fastapi_app
+  environment_slug: python
+  envs:
+  - key: APP_NAME
+    value: "app-c"
+  routes:
+  - path: /app-c
+
+ingress:
+  rules:
+  - component:
+      name: fastapi-app-a
+    match:
+      path:
+        prefix: /app-a
+  - component:
+      name: fastapi-app-b
+    match:
+      path:
+        prefix: /app-b
+  - component:
+      name: fastapi-app-c
+    match:
+      path:
+        prefix: /app-c
